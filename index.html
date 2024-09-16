@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="img/cloud.ico">
+   
+    <title>softness ii</title>
+</head>
+<body>
+
+<div id="vanta-container"></div>
+
+<div class="interactive-div">
+    <p>Softness as a concept and practice has frequently been sidelined in mainstream discourse, often perceived as synonymous with fragility or a lack of resilience. This project seeks to question that history by exploring new ideas of ‘softness’ including its contemporary relevance and function. Through the act of gathering, this ongoing collection (authored by many), puts diverse ideas of ‘softness’ in proximity to one another in order to surface the many dimensions of how ‘softness’ shapes our socio-political and cultural landscapes in subtle yet significant ways.</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSflIQfRcHaPY3qa1TU6pcF-pFmg3V-DqW9eyAvlj3sKh2rgxg/viewform" target="_blank">We invite you to contribute to this project through the submission form</a>
+</div>
+
+
+<a download="volume2" id="volume" href="pdf/volumeii_softness.zip" target="_blank"> get volume ii</a>
+
+<div class="index">index</div>
+
+
+<div id="shape-container"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://www.vantajs.com/dist/vanta.clouds.min.js"></script>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+        VANTA.CLOUDS({
+            el: "#vanta-container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            skyColor: 0xffffff,
+            cloudColor: 0xb4cbeb,
+            cloudShadowColor: 0x404c9c,
+            sunColor: 0xff8e00,
+            sunGlareColor: 0xffac62,
+            speed: 0.80
+        });
+
+        const shapeContainer = document.getElementById('shape-container');
+
+        function createShapes(numShapes) {
+            const margin = 80; 
+
+            for (let i = 1; i <= numShapes; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+                shape.style.left = getRandomNumber(0, window.innerWidth, margin) + 'px'; // Random left position
+                shape.style.top = getRandomNumber(0, window.innerHeight, margin) + 'px'; // Random top position
+                
+
+                shape.addEventListener('click', () => {
+              
+                    shape.classList.toggle('clicked');
+
+                    
+                    showCustomContent(i);
+                });
+
+                shapeContainer.appendChild(shape);
+            }
+        }
+
+        createShapes(12); 
+
+        function getRandomNumber(min, max, margin) {
+            return Math.random() * (max - min - 2 * margin) + min + margin;
+        }
+
+        function showCustomContent(shapeNumber) {
+    const contentMap = {
+        1: {
+            title: '',
+            text: 'a subject i failed to learn <br> I approach this love, like an analyst. <br> Restless, meticulous, sentimental. just to fail at understanding it. all I can do now is carry my failure with me, my rotten, growing, lace-like failure.',
+            image: 'img/Amanda Li.jpeg',
+            from: 'amanda li'
+        },
+        2: {
+            title: '',
+            from: 'tonia zhang',
+            text: '',
+            image: 'img/Tonia Zhang.jpg',
+                     
+        },
+
+        3: {
+            title: 'alison plays <br> the viola',
+            from: 'evelyn cao',
+            text: 'this is a short film that’s a wordless portrait of my twin sibling alison. i wanted to capture the oppressive heat of a socal spring afternoon',
+            image: 'img/evelyn.png',
+            link: 'https://vimeo.com/933522488?share=copy',          
+        },
+
+        4: {
+            title: 'lonesome cowpoke',
+            from: 'elliott romano',
+            text: 'lonesome cowpoke is a machines attempt at rendering a traditionally masculine symbol: the american cowboy. lonesome cowpoke softens the edges of this rugged male trope in substance and bitrate. you can view the project at lonsomecowpoke.online',
+            image: 'img/Elliott Romano.png',
+            link: '',          
+        },
+
+        5: {
+            title: 'opacity provides a refuge to explore secret dreams',
+            from: 'kobe jackson ',
+            text: '',
+            image: 'img/kobe jackson.jpeg',
+            link: '',          
+        },
+       
+        6: {
+            title: '',
+            from: 'brooke',
+            text: '',
+            image: 'img/jenny holzer.png',
+                     
+        },
+       
+        7: {
+            title: 'passion is powerful',
+            from: 'margot peer',
+            text: '',
+            image: 'img/ Margot Peer.jpg',
+                     
+        },
+       
+
+        8: {
+            title: 'lonesome cowpoke',
+            from: 'elliott romano',
+            text: 'lonesome cowpoke is a machines attempt at rendering a traditionally masculine symbol: the american cowboy. lonesome cowpoke softens the edges of this rugged male trope in substance and bitrate. you can view the project at lonsomecowpoke.online',
+            image: 'img/02 - Elliott Romano.png',
+                      
+        },
+       
+        9: {
+            title: 'opacity provides a refuge to explore secret dreams',
+            from: 'kobe jackson ',
+            text: '',
+            image: 'img/kobe jackson2.jpeg',
+                     
+        },
+
+        10: {
+            title: 'cape cod on sunday ',
+            from: 'olivia stoltzfus',
+            text: '<br>I.<br> <br> New friends stubble<br>the sloped sand<br>dunes of Province<br>Lands, toss football<brover sand formed<br>by a grinding<br>glacier, wave arms<brover sediment from<br>an outwash plain.<br><br>II.<br><br>The American beachgrass,<br>seaside goldenrod, and<br>wormwood (especially close<br>to the sea)<br>protect themselves by<br>growing a waxy<br>cuticle to cut<br>the salt spray<br>and coastal wind.<br><br>III.<br><br>Parting is such<br>sweet sorrow.<br>My arms are<br>thick with effort<br>to keep things<br>that can’t be<br>seen or heard—<br>the things that<br>matter the most.<br>',
+            image: 'img/empty.png',
+                     
+        },
+
+
+        11: {
+            title: 'american mink',
+            from: 'olivia stoltzfus',
+            text: 'He’s nothing to be scared<br>of, beady eyes and red<br>fur untouched by water, luster<br>lost by sun. His small<br>body touches more rock than<br>my long strides. I took<br>his spot, on Tiger Rock—<br>the name I’ve given to<br>this black rock striped white.<br>Zebra Rock. Lightning Rock. American<br>Mink, although I called him<br>Sea Otter. He’s nothing to<br>be scared of, although now<br>I’m not sure how my<br>brain makes the distinction. Some<br>things taught me to not<br>be scared, like when Dad<br>brought home in his lunch<br>Tupperware a babysnapping turtle.<br>The dirt under my dad’s<br>nails— equal teachers, here. His<br>socks thick with dust, cut<br>jeans fraying over strong legs.<br>I’m only ever searching for<br>something like that—his bravery.<br>',
+            image: 'img/empty.png',
+                    
+        },
+
+        12: {
+            title: 'moonstone beach',
+            from: 'avery zeng',
+            text: '',
+            image: 'img/Avery Zeng.jpeg',
+                     
+        },
+        
+    };
+
+    const shapeContent = contentMap[shapeNumber];
+
+
+    let customContent = document.querySelector('.custom-content');
+    if (!customContent) {
+        customContent = document.createElement('div');
+        customContent.className = 'custom-content';
+        customContent.style.display = 'none'; 
+        document.body.appendChild(customContent);
+    }
+
+    
+    customContent.innerHTML = `
+        <h2>${shapeContent.title}</h2>
+        <h3>${shapeContent.from}</h3>
+        <p>${shapeContent.text}</p>
+        <img src="${shapeContent.image}" alt="Image ${shapeNumber}">
+        <a href="${shapeContent.link}" target="_blank"></a>
+    `;
+
+   
+    customContent.style.display = 'grid'; 
+    customContent.style.gridTemplateColumns = 'auto auto'; 
+
+
+    customContent.addEventListener('click', () => {
+        customContent.style.display = 'none';
+    });
+}
+    });
+</script>
+</body>
+</html>
