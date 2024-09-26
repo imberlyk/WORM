@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einzigwurm Rain</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            background: rgb(45,189,253);
+background: linear-gradient(0deg, rgba(45,189,253,1) 0%, rgba(195,34,64,1) 100%);
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="rainCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        const images = [];
+        let imageSrc = 'einzigwurm.png'; // Path to your image
+
+        let width, height;
+        let worms = [];
+
+        // Initialize canvas size
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        // Create a worm class to animate
+        class Worm {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.speed = Math.random() * 4 + 3;
+                this.size = Math.random() * 100 + 60;
+            }
+
+            draw() {
+                let img = new Image();
+                img.src = imageSrc;
+                ctx.drawImage(img, this.x, this.y, this.size, this.size);
+                this.y += this.speed;
+                
+                // Reset worm's position once it falls off screen
+                if (this.y > height) {
+                    this.y = -this.size;
+                    this.x = Math.random() * width;
+                }
+            }
+        }
+
+        // Create rain effect
+        function createRain() {
+            for (let i = 0; i < 100; i++) {
+                worms.push(new Worm());
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            worms.forEach(worm => worm.draw());
+            requestAnimationFrame(animate);
+        }
+
+        // Resize and start rain
+        window.addEventListener('resize', resize);
+        resize();
+        createRain();
+        animate();
+    </script>
+</body>
+</html>

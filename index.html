@@ -1,85 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+
+  <!-- ___     ___                                       ___     ___                                                                   ___   
+(   )   (   )      .-.             .-.            (   )   (   )                               .-.         .-.                   (   )  
+ | |_    | | .-.  ( __)   .--.    ( __)   .--.     | |_    | | .-.   .--.     .--.  ___ .-.  ( __) .--.  ( __) ___ .-.    .---.  | |   
+(   __)  | |/   \ (''") /  _  \   (''") /  _  \   (   __)  | |/   \ /    \   /    \(   )   \ (''")/    \ (''")(   )   \  / .-, \ | |   
+ | |     |  .-. .  | | . .' `. ;   | | . .' `. ;   | |     |  .-. .|  .-. ; |  .-. ;| ' .-. ; | |;  ,-. ' | |  |  .-. . (__) ; | | |   
+ | | ___ | |  | |  | | | '   | |   | | | '   | |   | | ___ | |  | ||  | | | | |  | ||  / (___)| || |  | | | |  | |  | |   .'`  | | |   
+ | |(   )| |  | |  | | _\_`.(___)  | | _\_`.(___)  | |(   )| |  | ||  |/  | | |  | || |       | || |  | | | |  | |  | |  / .'| | | |   
+ | | | | | |  | |  | |(   ). '.    | |(   ). '.    | | | | | |  | ||  ' _.' | |  | || |       | || |  | | | |  | |  | | | /  | | | |   
+ | ' | | | |  | |  | | | |  `\ |   | | | |  `\ |   | ' | | | |  | ||  .'.-. | '  | || |       | || '  | | | |  | |  | | ; |  ; | | |   
+ ' `-' ; | |  | |  | | ; '._,' '   | | ; '._,' '   ' `-' ; | |  | |'  `-' / '  `-' /| |       | |'  `-' | | |  | |  | | ' `-'  | | |   
+  `.__. (___)(___)(___) '.___.'   (___) '.___.'     `.__. (___)(___)`.__.'   `.__.'(___)     (___)`.__. |(___)(___)(___)`.__.'_.(___)  
+                                                                                                  ( `-' ;                              
+                                                                                                   `.__.                               -->
+                                                                                                  
+                                                                                                  
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Einzigwurm Rain</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-            background: rgb(45,189,253);
-background: linear-gradient(0deg, rgba(45,189,253,1) 0%, rgba(195,34,64,1) 100%);
-        }
-        canvas {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="rainCanvas"></canvas>
+    <meta charset="UTF-8" />
+    <title>3D X-Axis rotating Images gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="box">
+      <span style="--i:1"> <img src="same.jpg"> </span>
+      <span style="--i:2"> <img src="same.jpg"> </span>
+      <span style="--i:3"> <img src="same.jpg"> </span>
+      <span style="--i:4"> <img src="same.jpg"> </span>
+      <span style="--i:5"> <img src="same.jpg"> </span>
+      <span style="--i:6"> <img src="same.jpg"> </span>
+      <span style="--i:7"> <img src="same.jpg"> </span>
+      <span style="--i:8"> <img src="same.jpg"> </span>
+      <span style="--i:8"> <img src="same.jpg"> </span>
+      <span style="--i:1"> <img src="same.jpg"> </span>
+      <span style="--i:1"> <img src="same.jpg"> </span>
+			<span style="--i:8"> <img src="same.jpg"> </span>
+			<span style="--i:8"> <img src="same.jpg"> </span>
+			<span style="--i:8"> <img src="same.jpg"> </span>
+			<span style="--i:8"> <img src="same.jpg"> </span>
+	</div>		
 
-    <script>
-        const canvas = document.getElementById('rainCanvas');
-        const ctx = canvas.getContext('2d');
-        const images = [];
-        let imageSrc = 'einzigwurm.png'; // Path to your image
-
-        let width, height;
-        let worms = [];
-
-        // Initialize canvas size
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        // Create a worm class to animate
-        class Worm {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height - height;
-                this.speed = Math.random() * 4 + 3;
-                this.size = Math.random() * 100 + 60;
-            }
-
-            draw() {
-                let img = new Image();
-                img.src = imageSrc;
-                ctx.drawImage(img, this.x, this.y, this.size, this.size);
-                this.y += this.speed;
-                
-                // Reset worm's position once it falls off screen
-                if (this.y > height) {
-                    this.y = -this.size;
-                    this.x = Math.random() * width;
-                }
-            }
-        }
-
-        // Create rain effect
-        function createRain() {
-            for (let i = 0; i < 100; i++) {
-                worms.push(new Worm());
-            }
-        }
-
-        // Animation loop
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            worms.forEach(worm => worm.draw());
-            requestAnimationFrame(animate);
-        }
-
-        // Resize and start rain
-        window.addEventListener('resize', resize);
-        resize();
-        createRain();
-        animate();
-    </script>
-</body>
-</html>
+   
+      <div class="duplicate">a copy</div>
+    </div>
+</div>
+<script src="script.js"></script>
+  </body>
