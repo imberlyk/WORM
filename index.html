@@ -3,54 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tilt Example</title>
+    <title>Tilt Responsive Letters</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-        #scene {
+            background-color: #f0f0f0;
             position: relative;
-            width: 100vw;
-            height: 100vh;
         }
         .letter {
             font-size: 3rem;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
+            transition: transform 0.1s ease;
         }
     </style>
 </head>
 <body>
-    <!-- Create a container for the letters -->
-    <div id="scene">
-        <div data-depth="0.2" class="letter">h</div>
-        <div data-depth="0.4" class="letter">e</div>
-        <div data-depth="0.6" class="letter">l</div>
-        <div data-depth="0.8" class="letter">l</div>
-        <div data-depth="1.0" class="letter">o</div>
-        <div data-depth="1.2" class="letter">?</div>
-    </div>
-
-    <!-- Include Parallax.js from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <!-- Create each letter as a separate element -->
+    <span class="letter" id="l1">h</span>
+    <span class="letter" id="l2">e</span>
+    <span class="letter" id="l3">l</span>
+    <span class="letter" id="l4">l</span>
+    <span class="letter" id="l5">o</span>
+    <span class="letter" id="l6">?</span>
 
     <script>
-        // Initialize Parallax.js
-        const scene = document.getElementById('scene');
-        const parallaxInstance = new Parallax(scene, {
-            relativeInput: true, // Make it responsive to tilt
-            hoverOnly: false // Activate on both hover and tilt
+        // Store each letter in an array
+        const letters = [
+            document.getElementById('l1'),
+            document.getElementById('l2'),
+            document.getElementById('l3'),
+            document.getElementById('l4'),
+            document.getElementById('l5'),
+            document.getElementById('l6'),
+        ];
+
+        // Set initial positions for the letters
+        letters.forEach((letter, index) => {
+            letter.style.left = `${20 + index * 10}vw`;
+            letter.style.top = '50vh';
         });
+
+        // Function to move letters based on tilt
+        function handleOrientation(event) {
+            const tiltX = event.beta; // ranges from -180 to 180
+            const tiltY = event.gamma; // ranges from -90 to 90
+
+            // Map tilt values to viewport dimensions
+            const xMovement = (tiltY / 90) * 20; // Scale tilt to movement range
+            const yMovement = (tiltX / 180) * 20; // Scale tilt to movement range
+
+            letters.forEach((letter, index) => {
+                // Calculate position for each letter
+                const offsetX = xMovement * (index + 1);
+                const offsetY = yMovement * (index + 1);
+
+                // Apply translation to the letter
+                letter.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            });
+        }
+
+        // Add event listener for device orientation
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', handleOrientation);
+        } else {
+            alert('Device orientation not supported on your device.');
+        }
     </script>
 </body>
 </html>
