@@ -3,77 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tilt Responsive Letters</title>
+    <title>Einzigwurm Rain</title>
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            position: relative;
+            height: 100%;
+            background: rgb(45,189,253);
+background: linear-gradient(0deg, rgba(45,189,253,1) 0%, rgba(195,34,64,1) 100%);
         }
-        .letter {
-            font-size: 3rem;
-            position: absolute;
-            transition: transform 0.1s ease;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Create each letter as a separate element -->
-    <span class="letter" id="l1">h</span>
-    <span class="letter" id="l2">e</span>
-    <span class="letter" id="l3">l</span>
-    <span class="letter" id="l4">l</span>
-    <span class="letter" id="l5">o</span>
-    <span class="letter" id="l6">?</span>
+    <canvas id="rainCanvas"></canvas>
 
     <script>
-        // Store each letter in an array
-        const letters = [
-            document.getElementById('l1'),
-            document.getElementById('l2'),
-            document.getElementById('l3'),
-            document.getElementById('l4'),
-            document.getElementById('l5'),
-            document.getElementById('l6'),
-        ];
+        const canvas = document.getElementById('rainCanvas');
+        const ctx = canvas.getContext('2d');
+        const images = [];
+        let imageSrc = 'einzigwurm.png'; // Path to your image
 
-        // Set initial positions for the letters
-        letters.forEach((letter, index) => {
-            letter.style.left = `${20 + index * 10}vw`;
-            letter.style.top = '50vh';
-        });
+        let width, height;
+        let worms = [];
 
-        // Function to move letters based on tilt
-        function handleOrientation(event) {
-            const tiltX = event.beta; // ranges from -180 to 180
-            const tiltY = event.gamma; // ranges from -90 to 90
-
-            // Map tilt values to viewport dimensions
-            const xMovement = (tiltY / 90) * 20; // Scale tilt to movement range
-            const yMovement = (tiltX / 180) * 20; // Scale tilt to movement range
-
-            letters.forEach((letter, index) => {
-                // Calculate position for each letter
-                const offsetX = xMovement * (index + 1);
-                const offsetY = yMovement * (index + 1);
-
-                // Apply translation to the letter
-                letter.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-            });
+        // Initialize canvas size
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
         }
 
-        // Add event listener for device orientation
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', handleOrientation);
-        } else {
-            alert('Device orientation not supported on your device.');
+        // Create a worm class to animate
+        class Worm {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.speed = Math.random() * 4 + 3;
+                this.size = Math.random() * 100 + 60;
+            }
+
+            draw() {
+                let img = new Image();
+                img.src = imageSrc;
+                ctx.drawImage(img, this.x, this.y, this.size, this.size);
+                this.y += this.speed;
+                
+                // Reset worm's position once it falls off screen
+                if (this.y > height) {
+                    this.y = -this.size;
+                    this.x = Math.random() * width;
+                }
+            }
         }
+
+        // Create rain effect
+        function createRain() {
+            for (let i = 0; i < 100; i++) {
+                worms.push(new Worm());
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            worms.forEach(worm => worm.draw());
+            requestAnimationFrame(animate);
+        }
+
+        // Resize and start rain
+        window.addEventListener('resize', resize);
+        resize();
+        createRain();
+        animate();
     </script>
 </body>
 </html>
